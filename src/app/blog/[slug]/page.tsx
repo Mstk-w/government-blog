@@ -6,9 +6,9 @@ import { Calendar, Clock, Tag, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -20,7 +20,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   try {
-    const post = getPostBySlug(params.slug)
+    const { slug } = await params
+    const post = getPostBySlug(slug)
     return {
       title: post.title,
       description: post.excerpt,
@@ -33,9 +34,10 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
   let post
   try {
-    post = getPostBySlug(params.slug)
+    post = getPostBySlug(slug)
   } catch {
     notFound()
   }
@@ -46,11 +48,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const contentHtml = processedContent.toString()
 
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-xl shadow-lg border border-gray-100">
       {/* 戻るボタン */}
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 transition-colors"
+        className="inline-flex items-center gap-2 text-primary hover:text-primary-dark mb-8 transition-colors"
       >
         <ArrowLeft size={20} />
         ブログ一覧に戻る
@@ -58,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* 記事ヘッダー */}
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary-dark">
           {post.title}
         </h1>
         
@@ -83,7 +85,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm"
+              className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-primary rounded-full text-sm"
             >
               <Tag size={12} />
               {tag}
@@ -94,7 +96,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       {/* 記事本文 */}
       <div 
-        className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600"
+        className="prose prose-lg max-w-none"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
     </article>

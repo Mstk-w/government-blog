@@ -16,21 +16,21 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-blue-800 text-white shadow-lg">
+    <header className="shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* ロゴ */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold">DX・業務効率化情報サイト</span>
+            <span className="text-2xl font-extrabold tracking-tight text-primary-light drop-shadow">DX・業務効率化情報サイト</span>
           </Link>
 
           {/* デスクトップナビゲーション */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-4">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                className="px-4 py-2 rounded-lg font-semibold text-white hover:bg-primary-light hover:text-primary-dark transition-colors duration-200"
               >
                 {item.name}
               </Link>
@@ -41,7 +41,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-300 hover:text-white p-2"
+              className="text-white hover:text-primary-light p-2"
               aria-expanded={isMenuOpen}
               aria-label="メニューを開く"
             >
@@ -58,7 +58,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="block px-4 py-3 rounded-lg font-semibold text-white hover:bg-primary-light hover:text-primary-dark transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
