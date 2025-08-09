@@ -5,16 +5,9 @@
   --color-primary-dark: #1e40af;
   --color-primary-light: #60a5fa;
   --color-accent: #f59e42;
-  --color-background: #f9fafb;
-  --color-foreground: #171717;
-  --font-family-sans: 'Inter', Arial, Helvetica, sans-serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #0a0a0a;
-    --color-foreground: #ededed;
-  }
+  --color-background: #ffffff;
+  --color-foreground: #1f2937;
+  --font-family-sans: "Inter", Arial, Helvetica, sans-serif;
 }
 
 /* --- UI/UX向上のためのカスタムCSS --- */
@@ -71,11 +64,13 @@ a {
 .prose code {
   @apply text-accent bg-gray-100 px-2 py-1 rounded;
 }
-.prose ul > li::marker, .prose ol > li::marker {
+.prose ul > li::marker,
+.prose ol > li::marker {
   color: var(--color-primary);
 }
 
 /* ヘッダー・フッターの配色統一 */
-header, footer {
-  @apply bg-primary-dark text-white;
+header,
+footer {
+  @apply bg-gradient-to-r from-primary-dark via-primary to-accent text-white;
 }
